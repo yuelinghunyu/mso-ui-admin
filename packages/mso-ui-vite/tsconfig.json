@@ -2,11 +2,10 @@
   "compilerOptions": {
     "declaration": true /* 生成相关的 '.d.ts' 文件。 */,
     "declarationDir": "../dist/types" /* '.d.ts' 文件输出目录 */,
-    "jsx": "preserve",
-    "types": ["unplugin-vue-define-options"]
+    "jsx": "preserve"
   },
   "include": ["packages/**/*.*", "packages/shims-vue.d.ts"],
-  "exclude": ["node_modules"],
+  "exclude": ["node_modules", "**/gulpfile.ts"],
   "esModuleInterop": false,
   "allowSyntheticDefaultImports": true //允许从没有默认导出的模块引入
 }

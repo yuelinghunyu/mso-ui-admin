@@ -3,9 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.ts",
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "private": true,
+  "license": "MIT",
   "peerDependencies": {
     "vue": "3.2.37",
     "@mso-pc-ui/utils": "link:../utils"
