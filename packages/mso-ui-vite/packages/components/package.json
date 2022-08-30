@@ -1,0 +1,13 @@
+{
+  "name": "@mso-pc-ui/components",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.ts",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "peerDependencies": {
+    "vue": "3.2.37",
+    "@mso-pc-ui/utils": "link:../utils"
+  }
+}
