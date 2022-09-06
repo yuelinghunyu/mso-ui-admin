@@ -1,18 +1,35 @@
-import { series } from "gulp";
+import path from "path";
+import chalk from "chalk";
+import { dest, parallel, series, src } from "gulp";
+import gulpSass from "gulp-sass";
+import dartSass from "sass";
+import autoprefixer from "gulp-autoprefixer";
+import cleanCSS from "gulp-clean-css";
+import consola from "consola";
 
-// `clean` 函数并未被导出（export），因此被认为是私有任务（private task）。
-// 它仍然可以被用在 `series()` 组合中。
-function clean(cb) {
-  // body omitted
-  cb();
+const distFolder = path.resolve(__dirname, "dist");
+const distBundle = path.resolve(__dirname, "../../mso-ui/theme");
+
+function buildThemeChalk() {
+  const sass = gulpSass(dartSass);
+  return src(path.resolve(__dirname, "src/**.scss"))
+    .pipe(sass.sync())
+    .pipe(autoprefixer({ cascade: false }))
+    .pipe(
+      cleanCSS({}, (details) => {
+        consola.success(
+          `${chalk.cyan(details.name)}: ${chalk.yellow(
+            details.stats.originalSize / 1000
+          )} KB -> ${chalk.green(details.stats.minifiedSize / 1000)} KB`
+        );
+      })
+    )
+    .pipe(dest(distFolder));
 }
 
-// `build` 函数被导出（export）了，因此它是一个公开任务（public task），并且可以被 `gulp` 命令直接调用。
-// 它也仍然可以被用在 `series()` 组合中。
-function build(cb) {
-  // body omitted
-  cb();
+export function copyThemeChalkBundle() {
+  return src(`${distFolder}/**`).pipe(dest(distBundle));
 }
 
-exports.build = build;
-exports.default = series(clean, build);
+export const build = parallel(series(buildThemeChalk, copyThemeChalkBundle));
+export default build;
